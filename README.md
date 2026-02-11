@@ -1,6 +1,7 @@
 # care_bridge
 
-A new Flutter project.
+A new Flutter project. Children with autism often require structured routines, regular monitoring, and consistent parental support. Many parents struggle to manage schedules, track growth data, and find reliable resources in one place.This application provides a centralized mobile solution to help parents support their children effectively.
+
 
 ## Getting Started
 
