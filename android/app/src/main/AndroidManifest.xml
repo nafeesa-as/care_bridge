@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.carebridge">
+
+    <!-- Permissions for Notifications -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <application
+        android:label="CareBridge"
+        android:name="io.flutter.app.FlutterApplication"
+        android:icon="@mipmap/ic_launcher">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"/>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Required for Flutter plugins -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2"/>
+
+        <!-- Service for Notifications -->
+        <service
+            android:name="com.dexterous.flutterlocalnotifications.ForegroundService"
+            android:permission="android.permission.FOREGROUND_SERVICE"
+            android:foregroundServiceType="mediaPlayback"/>
+
+        <!-- Handle Notification Click -->
+        <receiver 
+            android:name="com.dexterous.flutterlocalnotifications.ActionBroadcastReceiver"
+            android:exported="false"/>
+
+        <!-- Handle Scheduled Notifications -->
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.dexterous.flutterlocalnotifications.SCHEDULED_NOTIFICATION"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Handle Time Zone Changes -->
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.TimeZoneChangeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Restart Notifications After Device Reboot -->
+        <receiver
+            android:name="com.dexterous.flutterlocalnotifications.RebootBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Required to query other apps for processing text -->
+        <queries>
+            <intent>
+                <action android:name="android.intent.action.PROCESS_TEXT"/>
+                <data android:mimeType="text/plain"/>
+            </intent>
+        </queries>
+
+    </application>
+
+</manifest>
